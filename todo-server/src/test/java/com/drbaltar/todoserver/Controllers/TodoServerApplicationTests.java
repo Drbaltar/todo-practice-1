@@ -1,4 +1,4 @@
-package com.drbaltar.todoserver;
+package com.drbaltar.todoserver.Controllers;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
