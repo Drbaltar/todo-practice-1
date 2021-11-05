@@ -23,20 +23,22 @@ describe('UpdateItem', function () {
     });
 
     it("should allow user to change the item and submit", async () => {
-        const mockPatchRequest = jest.fn(() => Promise.resolve())
-        const mockGetRequest = jest.fn(() => Promise.resolve({data: testItem}))
-        patch.mockImplementationOnce(mockPatchRequest)
-        get.mockImplementationOnce(mockGetRequest)
+        // const mockPatchRequest = jest.fn(() => Promise.resolve())
+        // const mockGetRequest = jest.fn(() => Promise.resolve({data: testItem}))
+        patch.mockResolvedValueOnce()
+        get.mockResolvedValueOnce({data: testItem})
         userEvent.type(screen.getByRole('textbox'), " and give it water")
         expect(screen.getByRole('textbox')).toHaveValue(testItem.content + " and give it water")
 
         userEvent.click(screen.getByRole("button", {name: "Save"}))
-        expect(mockPatchRequest).toHaveBeenCalledWith("http://localhost:3001/api/items/1", {content: testItem.content + " and give it water"})
-        await waitFor(() => expect(mockGetRequest).toHaveBeenCalledWith("http://localhost:3001/api/items"))
+        expect(patch).toHaveBeenCalledWith("http://localhost:3001/api/items/1", {content: testItem.content + " and give it water"})
+        await waitFor(() => expect(get).toHaveBeenCalledWith("http://localhost:3001/api/items"))
         await waitFor(() => expect(mockUpdateList).toHaveBeenCalledWith(testItem))
     });
 
     afterEach(() => {
+        get.mockClear()
+        patch.mockClear()
         mockUpdateList.mockClear()
     })
 });

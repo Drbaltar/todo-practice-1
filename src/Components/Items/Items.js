@@ -1,4 +1,5 @@
 import Item from "../Item/Item";
+import PropTypes from "prop-types";
 
 function Items({items, onUpdateItemList}) {
     function renderItemsList() {
@@ -10,6 +11,11 @@ function Items({items, onUpdateItemList}) {
     return(
         <ul>{renderItemsList()}</ul>
     )
+}
+
+Items.propTypes = {
+    items: PropTypes.array,
+    onUpdateItemList: PropTypes.func
 }
 
 export default Items;
